@@ -3,8 +3,10 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { spawn } = require('child_process')
 
-// Any directories you will be adding code/files into, need to be added to this array so webpack will pick them up
+// Any directories you will be adding code/files into, need to
+//  be added to this array so webpack will pick them up
 const defaultInclude = path.resolve(__dirname, 'src')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   module: {
@@ -18,7 +20,7 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               postcssOptions: {
-                plugins: [require('tailwindcss'), require('autoprefixer')]
+                plugins: [require('@tailwindcss/postcss'), require('autoprefixer')]
               }
             }
           }
@@ -31,14 +33,27 @@ module.exports = {
         include: defaultInclude
       },
       {
-        test: /\.(jpe?g|png|gif)$/,
-        use: [{ loader: 'file-loader?name=img/[name]__[hash:base64:5].[ext]' }],
+        test: /\.(png|jpe?g|gif)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'img/[name]__[hash:base64:5][ext]'
+        },
         include: defaultInclude
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
-        use: [{ loader: 'file-loader?name=font/[name]__[hash:base64:5].[ext]' }],
-        include: defaultInclude
+        type: 'asset/resource',
+        generator: {
+          filename: 'font/[name]__[hash:base64:5][ext]',
+        },
+        include: defaultInclude,
+      },
+      {
+        test: /\.(mp4|m4v|webm|ogg)$/i,
+        use: {
+          loader: 'file-loader',
+          options: { name: 'assets/media/[name].[hash].[ext]' }
+        }
       }
     ]
   },
@@ -47,24 +62,35 @@ module.exports = {
     new HtmlWebpackPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: path.resolve(__dirname, 'src/assets/video'), to: 'assets/video' }
+      ]
     })
   ],
   devtool: 'cheap-source-map',
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
-    stats: {
-      colors: true,
-      chunks: false,
-      children: false
+    static: {
+      directory: path.resolve(__dirname, 'dist'),
     },
-    before() {
-      spawn(
-        'electron',
-        ['.'],
-        { shell: true, env: process.env, stdio: 'inherit' }
-      )
-      .on('close', code => process.exit(0))
-      .on('error', spawnError => console.error(spawnError))
-    }
+    client: {
+      logging: 'info',
+    },
+    setupMiddlewares: (middlewares, devServer) => {
+      if (!devServer) {
+        throw new Error('webpack-dev-server is not defined');
+      }
+
+      spawn('electron', ['.'], {
+        shell: true,
+        env: process.env,
+        stdio: 'inherit'
+      })
+        .on('close', () => process.exit(0))
+        .on('error', err => console.error(err));
+
+      return middlewares;
+    },
   }
 }

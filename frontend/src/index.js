@@ -1,29 +1,19 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import App from './components/App'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
 
 import Routes from './Routes';
 import store from './redux/store';
 
-// Since we are using HtmlWebpackPlugin WITHOUT a template, we should create our own root node in the body element before rendering into it
-let root = document.createElement('div')
+// Create root element
+const rootElement = document.createElement('div');
+rootElement.id = 'root';
+document.body.appendChild(rootElement);
 
-root.id = 'root'
-document.body.appendChild(root)
-
-// Now we can render our application into it
-render(
+// Create root and render
+const root = createRoot(rootElement);
+root.render(
   <Provider store={store}>
-    <Routes></Routes>
+    <Routes />
   </Provider>
-  ,
-  document.getElementById('root')
 );
-

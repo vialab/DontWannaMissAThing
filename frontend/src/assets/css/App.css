@@ -1,8 +1,5 @@
 /* Main CSS file */
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 html, body {
   max-width: 100%;
@@ -20,17 +17,20 @@ body {
   position: absolute;
   width: 35px;
   height: 35px;
-  border: 2px solid rgba(255,255,255,0.3);
+  /* border: 2px solid rgba(255,255,255,0.3); */
   box-sizing: border-box;
   border-radius: 50%;
   pointer-events: none;
-  visibility: hidden;
+  /* visibility: hidden; */
+  transform: translate(-50%, -50%);
   z-index: 3;
+  box-shadow: 0 0 10px 0px #fff, -5px 0 15px 0px #f0f, 5px 0 15px 0px #0ff;
 }
 
 video {
   width: 80vw;
   height: auto;
+  pointer-events: none;
 }
 
 #subtitles {

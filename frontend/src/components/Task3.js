@@ -18,37 +18,37 @@ import { createStore } from "redux";
 import reducer from "../redux/reducer";
 import NextPage from "./NextPage";
 
-//var VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\1.m4v";
-//var SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\1.srt";
+//var VIDEO_FILE = ".\\src\\assets\\video\\1.m4v";
+//var SUBTITLE_FILE = ".\\src\\assets\\video\\1.srt";
 
-//var VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\2.m4v";
-//var SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\2.srt";
+//var VIDEO_FILE = ".\\src\\assets\\video\\2.m4v";
+//var SUBTITLE_FILE = ".\\src\\assets\\video\\2.srt";
 
-//var VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\3.m4v";
-//var SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\3.srt";
+//var VIDEO_FILE = ".\\src\\assets\\video\\3.m4v";
+//var SUBTITLE_FILE = ".\\src\\assets\\video\\3.srt";
 
-//var VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\4.m4v";
-//var SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\4.srt";
+//var VIDEO_FILE = ".\\src\\assets\\video\\4.m4v";
+//var SUBTITLE_FILE = ".\\src\\assets\\video\\4.srt";
 
 let VIDEO = "VIDEO2";
 let VIDEO_FILE;
 let SUBTITLE_FILE;
 
 if (VIDEO === "VIDEO1") {
-  VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\1.m4v";
-  SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\1.srt";
+  VIDEO_FILE = "assets\\video\\1.m4v";
+  SUBTITLE_FILE = ".\\src\\assets\\video\\1.srt";
 }
 else if (VIDEO === "VIDEO2") {
-  VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\2.m4v";
-  SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\2.srt";
+  VIDEO_FILE = "assets\\video\\2.m4v";
+  SUBTITLE_FILE = ".\\src\\assets\\video\\2.srt";
 }
 else if (VIDEO === "VIDEO3") {
-  VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\3.m4v";
-  SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\3.srt";
+  VIDEO_FILE = "assets\\video\\3.m4v";
+  SUBTITLE_FILE = ".\\src\\assets\\video\\3.srt";
 }
 else if (VIDEO === "VIDEO4") {
-  VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\4.m4v";
-  SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\4.srt";
+  VIDEO_FILE = "assets\\video\\4.m4v";
+  SUBTITLE_FILE = ".\\src\\assets\\video\\4.srt";
 }
 
 var videoEnd = false;
@@ -151,21 +151,22 @@ export default class Task3 extends Component {
         // Audio demo
         if (this.state.activeDemo === "audio-demo") {
           let videoPlayer = document.getElementById("videoPlayer");
+
+        console.log("Attention:", arg.attention, " Collision:", this.checkCollision());
+
+        const v1 = document.getElementById("videoPlayer");
+        const v2 = document.getElementById("videoPlayer2");
+
           if (arg.attention && this.checkCollision()) {
-            console.log("Playing video - Track 1");
-            if (!videoPlayer.audioTracks[0].enabled) {
-              videoPlayer.audioTracks[1].enabled = false;
-              videoPlayer.audioTracks[0].enabled = true;
-              videoPlayer.currentTime -= 0.01;
+            console.log("Playing Track 1 (Video 1 audio)");
+          v1.muted = false;
+          v2.muted = true;
+        } else {
+            console.log("Playing Track 2 (Video 2 audio)");
+          v1.muted = true;
+          v2.muted = false;
             }
-          } if(!arg.attention | !this.checkCollision()) {
-            console.log("Playing video - Track 2");
-            if (!videoPlayer.audioTracks[1].enabled) {
-              videoPlayer.audioTracks[0].enabled = false;
-              videoPlayer.audioTracks[1].enabled = true;
-              videoPlayer.currentTime -= 0.01;
-            }
-          }
+          
         }
         /*
       if (this.state.activeDemo === "pause-demo") {
@@ -212,9 +213,30 @@ export default class Task3 extends Component {
 
   componentDidMount() {
     this.parseSubtitleFile();
-    // Disable next button on start
     disableNext();
+
+    const v1 = document.getElementById("videoPlayer");
+    const v2 = document.getElementById("videoPlayer2");
+
+    
+
+    // Play both videos together
+    // v1.play();
+    // v2.play();
+
+    // Keep in sync
+    // setInterval(() => {
+    //   const diff = Math.abs(v1.currentTime - v2.currentTime);
+    //   if (diff > 0.05) {
+    //     v2.currentTime = v1.currentTime;
+    //   }
+    // }, 100);
+
+    // Start with v2 muted
+    v1.muted = false;
+    v2.muted = true;
   }
+
 
   componentWillUnmount() {
     ipcRenderer.removeAllListeners();
@@ -223,8 +245,12 @@ export default class Task3 extends Component {
   checkCollision() {
     // Check for collision between eye gaze cursor and items
     let cursor = document.getElementById("gazeCursor");
-    let cursorCoord = cursor.getBoundingClientRect();
     let element = document.getElementById("videoPlayer");
+
+    if (!cursor || !element) {
+      return false;
+    }
+    let cursorCoord = cursor.getBoundingClientRect();
     let elementCoord = element.getBoundingClientRect();
 
     if (cursorCoord.left < elementCoord.left + elementCoord.width && cursorCoord.left + cursorCoord.width > elementCoord.left &&
@@ -350,17 +376,19 @@ export default class Task3 extends Component {
   }
 
   handleManualPause() {
-    if (this.state.activeDemo === "pause-demo") {
+// if (this.state.activeDemo === "pause-demo") {
       if (this.state.manualPause) {
         this.setState({ manualPause: false });
         console.log("Manual play");
         document.getElementById("videoPlayer").play();
+document.getElementById("videoPlayer2").play();
       } else {
         this.setState({ manualPause: true });
         console.log("Manual pause");
         document.getElementById("videoPlayer").pause();
+document.getElementById("videoPlayer2").pause();
       }
-    }
+// }
   }
 
   render() {
@@ -371,18 +399,27 @@ export default class Task3 extends Component {
         <div className="flex-grow bg-gray-100 flex items-center justify-center">
           <div className="px-10">
             <div className="flex flex-col items-center bg-white rounded-2xl px-10 py-8 shadow-lg hover:shadow-2xl transition duration-500">
-              <div id="video-container items-center">
+              <div id="video-container" className="items-center">
                 <video
-                  refs={this.videoPlayer}
-                  id="videoPlayer"
+                                    id="videoPlayer"
+src={VIDEO_FILE}
+                  playsInline
+                  controls
+                  // style={{ width: "640px", height: "360px" }}
                   onEnded={showNext}
                   onTimeUpdate={this.onPlaying.bind(this)}
                   onClick={this.handleManualPause.bind(this)}
+></video>
+
+                <video
+                  id="videoPlayer2"
+                  src={VIDEO_FILE}
                   playsInline
                   controls
-                >
-                  <source src={VIDEO_FILE} type="video/mp4" />
-                </video>
+                style={{  display: "none" }}
+                  onTimeUpdate={this.onPlaying.bind(this)}
+                ></video>
+
                 <SubtitleText
                   subtitles={this.state.currentSubtitles}
                   currentTime={this.state.currentTime}

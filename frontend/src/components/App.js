@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import "../assets/css/App.css";
+// import "../assets/css/App.css";
+// import "../assets/css/tailwind.css";
 import TopBar from "./TopBar";
 import BottomBar from "./BottomBar";
 import { Link } from "react-router-dom";

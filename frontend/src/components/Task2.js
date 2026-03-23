@@ -18,37 +18,37 @@ import reducer from "../redux/reducer";
 //import reducers from './../state/reducers/index';
 import NextPage from "./NextPage";
 
-//var VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\1.m4v";
-//var SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\1.srt";
+//var VIDEO_FILE = ".\\src\\assets\\video\\1.m4v";
+//var SUBTITLE_FILE = ".\\src\\assets\\video\\1.srt";
 
-//var VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\2.m4v";
-//var SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\2.srt";
+//var VIDEO_FILE = ".\\src\\assets\\video\\2.m4v";
+//var SUBTITLE_FILE = ".\\src\\assets\\video\\2.srt";
 
-//var VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\3.m4v";
-//var SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\3.srt";
+//var VIDEO_FILE = ".\\src\\assets\\video\\3.m4v";
+//var SUBTITLE_FILE = ".\\src\\assets\\video\\3.srt";
 
-//var VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\4.m4v";
-//var SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\4.srt";
+//var VIDEO_FILE = ".\\src\\assets\\video\\4.m4v";
+//var SUBTITLE_FILE = ".\\src\\assets\\video\\4.srt";
 
 let VIDEO = "VIDEO3";
 let VIDEO_FILE;
 let SUBTITLE_FILE;
 
 if (VIDEO === "VIDEO1") {
-  VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\1.m4v";
-  SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\1.srt";
+  VIDEO_FILE = "assets\\video\\1.m4v";
+  SUBTITLE_FILE = ".\\src\\assets\\video\\1.srt";
 }
 else if (VIDEO === "VIDEO2") {
-  VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\2.m4v";
-  SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\2.srt";
+  VIDEO_FILE = "assets\\video\\2.m4v";
+  SUBTITLE_FILE = ".\\src\\assets\\video\\2.srt";
 }
 else if (VIDEO === "VIDEO3") {
-  VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\3.m4v";
-  SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\3.srt";
+  VIDEO_FILE = "assets\\video\\3.m4v";
+  SUBTITLE_FILE = ".\\src\\assets\\video\\3.srt";
 }
 else if (VIDEO === "VIDEO4") {
-  VIDEO_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\4.m4v";
-  SUBTITLE_FILE = "C:\\Users\\moeah\\Documents\\Masters Thesis\\code\\front-end-refactor\\src\\assets\\video\\4.srt";
+  VIDEO_FILE = "assets\\video\\4.m4v";
+  SUBTITLE_FILE = ".\\src\\assets\\video\\4.srt";
 }
 
 var videoEnd = false;
@@ -294,7 +294,7 @@ export default class Task2 extends Component {
   }
 
   handleManualPause() {
-    if (this.state.activeDemo === "pause-demo") {
+//     if (this.state.activeDemo === "pause-demo") {
       if (this.state.manualPause) {
         this.setState({ manualPause: false });
         console.log("Manual play");
@@ -304,7 +304,7 @@ export default class Task2 extends Component {
         console.log("Manual pause");
         document.getElementById("videoPlayer").pause();
       }
-    }
+//     }
   }
 
   handleWPM(event, { value }) {
@@ -392,7 +392,7 @@ export default class Task2 extends Component {
           let ids = filtered.sort(function (a, b) {
             return a - b;
           });
-          console.log(subtitleItem.id, ids);
+          // console.log(subtitleItem.id, ids);
           if (subtitleItem.id === ids[0]) {
             if (
               subtitleItem.read &&
