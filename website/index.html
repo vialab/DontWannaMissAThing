@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Don't Wanna Miss a Thing | ETRA 2026" />
+    <meta property="og:description" content="Gaze-Aware Implicit Interventions for Distraction Recovery in Foreign-Language Videos" />
+    <meta property="og:image" content="https://vialab.github.io/GazeAwareVideoPlayer/logo.png" />
+    <meta property="og:url" content="https://vialab.github.io/GazeAwareVideoPlayer/" />
+    <meta property="og:type" content="website" />
+    <title>Don't Wanna Miss a Thing | ETRA 2026</title>
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="index.js" defer></script>
+</head>
+
+<body>
+    <div class="independent-logo-wrapper fade-up">
+        <img src="logo.svg" alt="Logo" width="80" class="independent-logo" />
+    </div>
+
+    <header class="site-header fade-up">
+        <div class="header-container">
+            <div class="header-logo" style="display: flex; align-items: center; gap: 10px;">
+                <div class="logo-wrapper" style="opacity: 0;">
+                    <img src="logo.svg" alt="Logo" width="80" />
+                </div>
+                <span style="white-space: nowrap;">[ Don't Wanna Miss a Thing ]</span>
+            </div>
+            <nav class="site-nav">
+                <a href="#interventions" class="nav-link interactive">Interventions</a>
+                <a href="#results" class="nav-link interactive">Findings</a>
+                <a href="#discussion" class="nav-link interactive">Discussion</a>
+                <a href="#citation" class="nav-link interactive">Citation</a>
+                <a href="https://github.com/vialab/GazeAwareVideoPlayer-main" target="_blank" class="nav-link interactive nav-link-bold"><i class="fab fa-github"></i> Source Code</a> 
+                <a href="https://vialab.ca/" target="_blank" class="nav-link interactive nav-link-bold"><i class="fas fa-file-pdf"></i> Read Our Paper</a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero" class="hero">
+        <div class="hero-bg bg-grid z-0"></div>
+        <div id="gaze-cursor"></div>
+        <div id="simulated-subtitle" class="simulated-subtitle opacity-0"></div>
+
+        <div class="hero-content z-10">
+            <div class="section-tag blur-up">ETRA 2026</div>
+            <h1 class="hero-title blur-up">
+                Don't Wanna Miss a Thing:
+            </h1>
+            <p class="hero-desc blur-up">
+                Gaze-Aware Implicit Interventions for<br>Distraction Recovery in Foreign-Language Videos
+            </p>
+
+            <div class="hero-authors blur-up">
+                <a href="#team" class="author-link group">
+                    <span class="author-name">Mohammed Ahmed</span>
+                    <span class="author-org">Ontario Tech University</span>
+                </a>
+                <a href="#team" class="author-link group">
+                    <span class="author-name">Benedict Leung</span>
+                    <span class="author-org">Ontario Tech University</span>
+                </a>
+                <a href="#team" class="author-link group">
+                    <span class="author-name">Mariana Shimabukuro</span>
+                    <span class="author-org">Ontario Tech University</span>
+                </a>
+                <a href="https://vialab.ca/" target="_blank" class="author-link group">
+                    <span class="author-name">Christopher Collins</span>
+                    <span class="author-org">Ontario Tech University</span>
+                </a>
+            </div>
+
+            <div class="hero-actions blur-up">
+                <a href="https://vialab.ca/" target="_blank" class="btn-primary interactive">
+                    Read Our Paper
+                </a>
+                <a href="#interventions" class="btn-link interactive">
+                    View Interventions
+                </a>
+                <a href="https://github.com/vialab/GazeAwareVideoPlayer-main" target="_blank"
+                    class="btn-link interactive">
+                    View Source Code
+                </a>
+
+                <div class="share-wrapper relative-pos">
+                    <button id="share-trigger-btn" style="text-decoration: none;"
+                        onclick="document.getElementById('share-popover').classList.toggle('active')"
+                        class="btn-link interactive group btn-share-trigger">
+                        <i class="fas fa-share-nodes"></i> Share
+                    </button>
+
+                    <div id="share-popover" class="share-popover">
+                        <a class="social-circle facebook"
+                            href="https://www.facebook.com/sharer/sharer.php?u=https://vialab.github.io/GazeAwareVideoPlayer-main/"
+                            target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook"
+                            title="Share on Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+
+                        <a class="social-circle x"
+                            href="https://twitter.com/intent/tweet?url=https://vialab.github.io/GazeAwareVideoPlayer-main/&text=Don't Wanna Miss a Thing: Gaze-Aware Implicit Interventions for Distraction Recovery in Foreign-Language Videos&hashtags=ETRA2026,HCI,EyeTracking"
+                            target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter"
+                            title="Share on Twitter">
+                            <i class="fab fa-x-twitter"></i>
+                        </a>
+
+                        <a class="social-circle reddit"
+                            href="https://reddit.com/submit?url=https://vialab.github.io/GazeAwareVideoPlayer-main/&title=Don't Wanna Miss a Thing: Gaze-Aware Implicit Interventions for Distraction Recovery in Foreign-Language Videos"
+                            target="_blank" rel="noopener noreferrer" aria-label="Share on Reddit"
+                            title="Share on Reddit">
+                            <i class="fab fa-reddit-alien"></i>
+                        </a>
+
+                        <a class="social-circle linkedin"
+                            href="https://www.linkedin.com/sharing/share-offsite/?url=https://vialab.github.io/GazeAwareVideoPlayer-main/"
+                            target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn"
+                            title="Share on LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+
+                        <a class="social-circle tumblr"
+                            href="https://www.tumblr.com/widgets/share/tool?canonicalUrl=https://vialab.github.io/GazeAwareVideoPlayer-main/&title=Don't Wanna Miss a Thing: Gaze-Aware Implicit Interventions for Distraction Recovery in Foreign-Language Videos"
+                            target="_blank" rel="noopener noreferrer" aria-label="Share on Tumblr"
+                            title="Share on Tumblr">
+                            <i class="fab fa-tumblr"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="teaser-section">
+        <div class="paper-figure scale-up teaser-container" id="teaser-image">
+            <div class="paper-figure-header">
+                <span>Fig 1.</span>
+                <span>System Pipeline Overview</span>
+            </div>
+            <div>
+                <img src="figures/teaser.svg" alt="Gaze tracker detecting missed context"
+                    class="teaser-img img-h-auto" />
+            </div>
+            <div class="paper-figure-caption">
+                An overview of the gaze-aware interventions during video-viewing in non-native languages. (Pause)
+                Playback is paused to prevent content loss. (Stack Subtitles) Subtitles are stacked to allow catch-up
+                reading. (Audio Dubbing) Audio dubbing
+                provides catch-up narration.
+            </div>
+        </div>
+        <div class="teaser-text-wrap fade-up">
+            <h2 class="section-title abstract-title">Abstract</h2>
+            <p class="teaser-text text-align-left">
+                Watching subtitled videos in a foreign language demands sustained visual attention, which can put
+                viewers at risk of missing content due to distraction, such as checking notifications. In this work, we
+                introduced a gaze-aware video player that adapts playback to support attention recovery. We evaluated
+                three gaze-aware techniques: adaptive pausing, stacked subtitles, and audio language switching
+                (dubbing). In a comparative study with 24 participants, we evaluated these techniques against a standard
+                video player with subtitles. While adaptive pausing improved task performance and reduced distractions,
+                stacked subtitles helped recover reading but occasionally slowed faster readers. The benefit of dubbing
+                was limited, resulting in additional cognitive load during the process. Ultimately, all gaze-aware
+                interventions outperformed the standard video player. This work highlights gaze-adaptive systems that
+                seamlessly support attention recovery into everyday viewing experiences.
+            </p>
+        </div>
+    </section>
+
+    <section id="interventions" class="interventions z-10" id="interventions-wrapper">
+        <div class="container">
+            <div class="section-tag blur-up-dark">System Behaviors</div>
+            <h2 class="section-title blur-up-dark">
+                Three Implicit Interventions Triggered by Attention Loss.
+            </h2>
+
+            <div class="interventions-list">
+                <div class="intervention-row">
+                    <div class="col-half order-video">
+                        <div class="video-wrapper interactive" data-technique="Adaptive Pausing">
+                            <video src="videos/pausingDemo.mp4" muted loop autoplay playsinline></video>
+                            <div class="video-progress-container">
+                                <div class="video-progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-half order-text">
+                        <div class="intervention-number">01 // Intervention</div>
+                        <h3 class="intervention-title">Pausing</h3>
+                        <p class="intervention-desc">
+                            Playback pauses the exact moment your gaze leaves the screen. It seamlessly resumes the
+                            moment your gaze returns. You miss nothing, and require no manual scrubbing.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="intervention-row">
+                    <div class="col-half order-text2">
+                        <div class="intervention-number">02 // Intervention</div>
+                        <h3 class="intervention-title">Subtitle Stacking</h3>
+                        <p class="intervention-desc">
+                            Subtitles persist and layer on top of one another if the system detects subtitles have not
+                            been read. Once the maximum stack is reached, the system pauses to allow catch-up.
+                        </p>
+                    </div>
+                    <div class="col-half order-video2">
+                        <div class="video-wrapper interactive" data-technique="Subtitle Stacking">
+                            <video src="videos/stackingDemo.mp4" muted loop autoplay playsinline></video>
+                            <div class="video-progress-container">
+                                <div class="video-progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="intervention-row">
+                    <div class="col-half order-video">
+                        <div class="video-wrapper interactive" data-technique="Attention Dubbing">
+                            <video id="dub-video" src="videos/dubbingDemo.mp4" muted loop autoplay playsinline></video>
+                            <button class="unmute-btn" onclick="toggleDubMute()">
+                                <i class="fas fa-volume-xmark" id="mute-icon"></i>
+                                <span id="mute-text">Unmute</span>
+                            </button>
+                            <div class="video-progress-container">
+                                <div class="video-progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-half order-text">
+                        <div class="intervention-number">03 // Intervention</div>
+                        <h3 class="intervention-title">Audio Dubbing</h3>
+                        <p class="intervention-desc">
+                            Instead of halting playback, the audio invisibly cuts to an English text-to-speech dub when
+                            you look away, shifting comprehension from visual reading to auditory listening.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="results" class="findings z-20">
+        <div class="container">
+            <div class="section-tag fade-up">Empirical Data</div>
+            <h2 class="section-title fade-up">
+                Gaze-Aware Interventions Outperform the Standard Player.
+            </h2>
+
+            <div class="study-overview fade-up study-overview-container">
+                <p class="study-overview-text">
+                    We conducted a <strong>within-subjects user study with 24 participants</strong> to evaluate the
+                    three gaze-aware interventions against a standard playback baseline. Condition viewing orders were
+                    counterbalanced to minimize learning effects. Viewer success was measured using continuous
+                    eye-tracking logs, performance on an asynchronous mobile distractor task, and post-task video
+                    comprehension quizzes.
+                </p>
+            </div>
+
+            <div class="findings-grid">
+                <div class="finding-card">
+                    <h3 class="finding-title">Content Comprehension</h3>
+                    <p class="finding-desc">
+                        Post-study performance showed that viewers managed to score similarly in content comprehension
+                        tests across all systems. Although comprehension was not statistically improved over the
+                        standard video player, viewers nonetheless preferred the gaze-aware interventions to maintain
+                        that parity under distraction.
+                    </p>
+                    <div class="paper-figure mt-6">
+                        <div class="paper-figure-header">
+                            <span>Fig 2.</span>
+                            <span>Content Comprehension</span>
+                        </div>
+                        <img src="figures/contentComprehensionResults.svg" alt="Content Comprehension Results"
+                            class="finding-img" />
+                    </div>
+                </div>
+
+                <div class="finding-card mt-lg">
+                    <h3 class="finding-title">Distractor Task Performance</h3>
+                    <p class="finding-desc">
+                        Pausing the video proved the most effective technique for mitigating distractions, yielding the
+                        highest scores (98%) on distractor questions. Participants spent comparable durations responding
+                        to the distractors across all methods.
+                    </p>
+                    <div class="paper-figure mt-6">
+                        <div class="paper-figure-header">
+                            <span>Fig 3.</span>
+                            <span>Distractor Task Results</span>
+                        </div>
+                        <img src="figures/distractorResults.svg" alt="Distractor Task Results" class="finding-img" />
+                    </div>
+                </div>
+
+                <div class="finding-card">
+                    <h3 class="finding-title">Gaze Offloading</h3>
+                    <p class="finding-desc">
+                        Eye-tracking analysis confirmed that implicit interventions reduce visual demand. Pausing
+                        reduced off-screen checks down to 5.4%, compared to 27.6% in a standard workflow.
+                    </p>
+                    <div class="paper-figure mt-6">
+                        <div class="paper-figure-header">
+                            <span>Fig 4.</span>
+                            <span>Gaze Offloading</span>
+                        </div>
+                        <img src="figures/gazeBehavior.svg" alt="Gaze Behavior Analysis" class="finding-img" />
+                    </div>
+                </div>
+
+                <div class="finding-card mt-lg">
+                    <h3 class="finding-title">Performance & Preferences</h3>
+                    <p class="finding-desc">
+                        Viewers heavily favored Pausing. Stacking and Dubbing emerged as intermediate techniques for
+                        balancing cognitive load, while the standard video player reliably performed the worst across
+                        recovery metrics.
+                    </p>
+                    <div class="paper-figure mt-6">
+                        <div class="paper-figure-header">
+                            <span>Fig 5.</span>
+                            <span>Survey Results</span>
+                        </div>
+                        <img src="figures/postTaskResults.svg" alt="Post Task Survey Results" class="finding-img" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="discussion" class="discussion z-20">
+        <div class="container">
+            <div class="section-tag fade-up">Discussion</div>
+            <h2 class="section-title fade-up">
+                Balancing Gaze-Aware Adaptation with Cognitive Load.
+            </h2>
+
+            <div class="discussion-grid">
+                <div class="discussion-col fade-up">
+                    <h3 class="discussion-title">Real-Time Recovery</h3>
+                    <p class="discussion-text">
+                        Gaze-adaptive interventions effectively help viewers disengage during distractions without the
+                        cognitive burden of monitoring the video. While they keep viewers temporally synchronized during
+                        immediate attention lapses, this short-term access does not automatically bridge the gap to
+                        long-term conceptual learning or memory.
+                    </p>
+                </div>
+
+                <div class="discussion-col fade-up">
+                    <h3 class="discussion-title">Modality &amp; Cognitive Load</h3>
+                    <p class="discussion-text">
+                        Abrupt modality transitions (like audio dubbing) can overload working memory for non-fluent
+                        viewers managing dual-language processing. While <em>stacking</em> maintains visual context by
+                        keeping viewers engaged, strict <em>pausing</em> is most effective at offloading attentional
+                        demands.
+                    </p>
+                </div>
+
+                <div class="discussion-col fade-up">
+                    <h3 class="discussion-title">Aligning with Viewer Behavior</h3>
+                    <p class="discussion-text">
+                        Fixed thresholds for interventions often misalign with natural reading speeds, sometimes
+                        triggering unnecessary disruptions during normal viewing. A seamless experience requires
+                        lightweight calibration and adjustable features so interventions feel like a natural extension
+                        of viewing behavior.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="future-work" class="discussion z-20 future-works-pt">
+        <div class="container">
+            <div class="section-tag fade-up">Ongoing Research</div>
+            <h2 class="section-title fade-up">
+                Future Works & Limitations.
+            </h2>
+
+            <div class="discussion-grid discussion-grid-fluid">
+                <div class="discussion-col fade-up flex-1">
+                    <h3 class="discussion-title">Contextual Translation</h3>
+                    <p class="discussion-text">
+                        Currently tested in a controlled environment with short videos, future research will investigate
+                        how gaze-adaptive recovery translates to extended viewing sessions, multitasking contexts, and
+                        varied device formats like mobile viewing.
+                    </p>
+                </div>
+
+                <div class="discussion-col fade-up flex-1">
+                    <h3 class="discussion-title">Multi-Viewer Resilience</h3>
+                    <p class="discussion-text">
+                        While designed for a single viewer, scaling interventions—such as transitioning to AI summaries
+                        or pushing catch-up notifications to a personal mobile device—can preserve seamless playback for
+                        others in shared-screen environments.
+                    </p>
+                </div>
+
+                <div class="discussion-col fade-up flex-1">
+                    <h3 class="discussion-title">Cross-linguistic Studies</h3>
+                    <p class="discussion-text">
+                        Because our participant sample primarily consisted of viewers who were non-fluent in
+                        Spanish/Italian but fluent in English, further evaluations across diverse language pairings are
+                        essential to determine how recovery techniques generalize.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="team z-20">
+        <div class="container">
+            <div class="section-tag fade-up">The Team</div>
+            <h2 class="section-title fade-up">Authors</h2>
+
+            <div class="team-grid">
+                <div class="team-member fade-up">
+                    <div class="team-avatar relative">
+                        <img src="imgs/mohammed-ahmed.png" alt="Mohammed Ahmed" class="team-photo z-10"
+                            onerror="this.style.opacity=0" />
+                        <span class="avatar-initials z-0">MA</span>
+                    </div>
+                    <div>
+                        <h3 class="team-name">Mohammed Ahmed</h3>
+                        <p class="team-member-role">Researcher, MSc</p>
+                        <p class="team-org">Ontario Tech University</p>
+                        <div class="team-member-socials">
+                            <a href="mailto:mohammed.ahmed2@ontariotechu.net" class="team-link" title="Email">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            <a href="https://orcid.org/0009-0002-4234-0057" target="_blank" class="team-link"
+                                title="ORCID">
+                                <i class="fab fa-orcid"></i>
+                            </a>
+                            <a href="https://github.com/moeahmed" target="_blank" class="team-link" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-member fade-up">
+                    <div class="team-avatar relative">
+                        <img src="imgs/benedict-leung.jpg" alt="Benedict Leung" class="team-photo z-10"
+                            onerror="this.style.opacity=0" />
+                        <span class="avatar-initials z-0">BL</span>
+                    </div>
+                    <div>
+                        <h3 class="team-name">Benedict Leung</h3>
+                        <p class="team-member-role">Researcher, MSc</p>
+                        <p class="team-org">Ontario Tech University</p>
+                        <div class="team-member-socials">
+                            <a href="mailto:benedict.leung1@ontariotechu.net" class="team-link" title="Email">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            <a href="https://orcid.org/0009-0003-6754-9874" target="_blank" class="team-link"
+                                title="ORCID">
+                                <i class="fab fa-orcid"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/ben--leung" target="_blank" class="team-link"
+                                title="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://scholar.google.com/citations?hl=en&user=ofhVl3wAAAAJ" target="_blank"
+                                class="team-link" title="Google Scholar">
+                                <i class="fas fa-graduation-cap"></i>
+                            </a>
+                            <a href="https://github.com/Benedict-Leung" target="_blank" class="team-link"
+                                title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://benedict-leung.github.io" target="_blank" class="team-link"
+                                title="Website">
+                                <i class="fas fa-globe"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-member fade-up">
+                    <div class="team-avatar relative">
+                        <img src="imgs/mariana-shimabukuro.jpg" alt="Mariana Shimabukuro" class="team-photo z-10"
+                            onerror="this.style.opacity=0" />
+                        <span class="avatar-initials z-0">MS</span>
+                    </div>
+                    <div>
+                        <h3 class="team-name">Mariana Shimabukuro</h3>
+                        <p class="team-member-role">Researcher, Associate
+                            Professor</p>
+                        <p class="team-org">Ontario Tech University</p>
+                        <div class="team-member-socials">
+                            <a href="mailto:mariana.shimabukuro@ontariotechu.ca" class="team-link" title="Email">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            <a href="https://orcid.org/0000-0003-4104-0781" target="_blank" class="team-link"
+                                title="ORCID">
+                                <i class="fab fa-orcid"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/makemi" target="_blank" class="team-link"
+                                title="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://scholar.google.com/citations?hl=en&user=FSSbcSgAAAAJ" target="_blank"
+                                class="team-link" title="Google Scholar">
+                                <i class="fas fa-graduation-cap"></i>
+                            </a>
+                            <a href="https://github.com/maakemi" target="_blank" class="team-link" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://www.shimabukuro.ca/" target="_blank" class="team-link" title="Website">
+                                <i class="fas fa-globe"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-member fade-up">
+                    <div class="team-avatar relative">
+                        <img src="imgs/christopher-collins.jpg" alt="Christopher Collins" class="team-photo z-10"
+                            onerror="this.style.opacity=0" />
+                        <span class="avatar-initials z-0">CC</span>
+                    </div>
+                    <div>
+                        <h3 class="team-name">Christopher Collins</h3>
+                        <p class="team-member-role">Professor</p>
+                        <p class="team-org">Ontario Tech University</p>
+                        <div class="team-member-socials">
+                            <a href="mailto:christopher.collins@ontariotechu.ca" class="team-link" title="Email">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            <a href="https://orcid.org/0000-0002-4520-7000" target="_blank" class="team-link"
+                                title="ORCID">
+                                <i class="fab fa-orcid"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/christophercollins/" target="_blank" class="team-link"
+                                title="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://scholar.google.ca/citations?user=yHRw4eMAAAAJ&hl=en" target="_blank"
+                                class="team-link" title="Google Scholar">
+                                <i class="fas fa-graduation-cap"></i>
+                            </a>
+                            <a href="https://github.com/vialab" target="_blank" class="team-link" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://vialab.ca/" target="_blank" class="team-link" title="Website">
+                                <i class="fas fa-globe"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="citation" class="citation z-20">
+        <div class="citation-container fade-up">
+            <div class="font-mono text-accent text-sm mb-6 uppercase tracking-widest">Citation</div>
+            <h2 class="citation-title">Cite our work</h2>
+
+            <div class="citation-toggle-group">
+                <button
+                    onclick="document.getElementById('bibtex-container').style.display='block'; document.getElementById('apa-container').style.display='none'; this.style.backgroundColor='#111827'; this.style.color='#ffffff'; this.nextElementSibling.style.backgroundColor='transparent'; this.nextElementSibling.style.color='#6b7280';"
+                    class="citation-toggle-btn-active">BibTeX</button>
+                <button
+                    onclick="document.getElementById('bibtex-container').style.display='none'; document.getElementById('apa-container').style.display='block'; this.style.backgroundColor='#111827'; this.style.color='#ffffff'; this.previousElementSibling.style.backgroundColor='transparent'; this.previousElementSibling.style.color='#6b7280';"
+                    class="citation-toggle-btn-inactive">APA</button>
+            </div>
+
+            <div id="bibtex-container" class="citation-box group">
+                <button class="copy-btn" title="Copy to clipboard"
+                    onclick="navigator.clipboard.writeText(document.getElementById('bibtex').innerText); const span = this.querySelector('.copy-tag'); span.innerHTML='<i class=\'fas fa-check\'></i> Copied!'; setTimeout(() => span.innerHTML='<i class=\'far fa-copy\'></i> Copy', 2000);">
+                    <span class="copy-tag"><i class="far fa-copy"></i> Copy</span>
+                </button>
+                <pre id="bibtex" class="bibtex-code"><code>@inproceedings{ahmed2026dontwannamissathing,
+  title={Don't Wanna Miss a Thing: Gaze-Aware Implicit Interventions for Distraction Recovery in Foreign-Language Videos},
+  author={Mohammed Ahmed and Benedict Leung and Mariana Shimabukuro and Christopher Collins},
+  booktitle={Proceedings of the Symposium on Eye Tracking Research and Applications},
+  year={2026},
+  organization={ACM}
+}</code></pre>
+            </div>
+
+            <div id="apa-container" class="citation-box group display-none">
+                <button class="copy-btn" title="Copy to clipboard"
+                    onclick="navigator.clipboard.writeText(document.getElementById('apa').innerText); const span = this.querySelector('.copy-tag'); span.innerHTML='<i class=\'fas fa-check\'></i> Copied!'; setTimeout(() => span.innerHTML='<i class=\'far fa-copy\'></i> Copy', 2000);">
+                    <span class="copy-tag"><i class="far fa-copy"></i> Copy</span>
+                </button>
+                <pre id="apa"
+                    class="bibtex-code apa-code-text">Ahmed, M., Leung, B., Shimabukuro, M., & Collins, C. (2026). Don't Wanna Miss a Thing: Gaze-Aware Implicit Interventions for Distraction Recovery in Foreign-Language Videos. In Proceedings of the Symposium on Eye Tracking Research and Applications. ACM.</pre>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-main">
+        <div class="footer-container">
+            <div class="footer-top-section">
+                <div class="footer-brand">
+                    [ Don't Wanna Miss a Thing ]
+                </div>
+
+                <h2 class="footer-heading">
+                    Gaze-Aware Implicit Interventions for Distraction Recovery in Foreign-Language Videos
+                </h2>
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="footer-bottom">
+                <div class="footer-details">
+                    <p class="margin-0">ETRA 2026</p>
+                    <p class="margin-0">Ontario Tech University &bull; <a href="https://vialab.ca" target="_blank"
+                            class="footer-link-light">vialab.ca</a></p>
+                </div>
+
+                <div class="footer-links">
+                    <a href="https://vialab.ca/" target="_blank" onmouseover="this.style.color='#f9fafb'"
+                        onmouseout="this.style.color='#9ca3af'" class="footer-link-gray">Read Our Paper</a>
+                    <a href="https://github.com/vialab/GazeAwareVideoPlayer-main" target="_blank"
+                        onmouseover="this.style.color='#f9fafb'" onmouseout="this.style.color='#9ca3af'"
+                        class="footer-link-gray">View GitHub</a>
+
+                    <div class="relative-pos">
+                        <button id="share-trigger-btn-footer"
+                            onclick="document.getElementById('share-popover-footer').classList.toggle('active')"
+                            onmouseover="this.style.color='#f9fafb'" onmouseout="this.style.color='#9ca3af'"
+                            class="footer-btn-gray">SHARE <i class="fas fa-share-nodes"></i></button>
+
+                        <div id="share-popover-footer" class="share-popover up">
+                            <a class="social-circle facebook"
+                                href="https://www.facebook.com/sharer/sharer.php?u=https://vialab.github.io/GazeAwareVideoPlayer-main/"
+                                target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook"
+                                title="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a class="social-circle x"
+                                href="https://twitter.com/intent/tweet?url=https://vialab.github.io/GazeAwareVideoPlayer-main/&text=Gaze-Aware Video Player: Supporting Distraction Recovery in Subtitled Video Viewing&hashtags=ETRA2026,HCI,EyeTracking"
+                                target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter"
+                                title="Share on Twitter"><i class="fab fa-x-twitter"></i></a>
+                            <a class="social-circle reddit"
+                                href="https://reddit.com/submit?url=https://vialab.github.io/GazeAwareVideoPlayer-main/&title=Gaze-Aware Video Player: Supporting Distraction Recovery in Subtitled Video Viewing"
+                                target="_blank" rel="noopener noreferrer" aria-label="Share on Reddit"
+                                title="Share on Reddit"><i class="fab fa-reddit-alien"></i></a>
+                            <a class="social-circle linkedin"
+                                href="https://www.linkedin.com/sharing/share-offsite/?url=https://vialab.github.io/GazeAwareVideoPlayer-main/"
+                                target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn"
+                                title="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a class="social-circle tumblr"
+                                href="https://www.tumblr.com/widgets/share/tool?canonicalUrl=https://vialab.github.io/GazeAwareVideoPlayer-main/&title=Gaze-Aware Video Player: Supporting Distraction Recovery in Subtitled Video Viewing"
+                                target="_blank" rel="noopener noreferrer" aria-label="Share on Tumblr"
+                                title="Share on Tumblr"><i class="fab fa-tumblr"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="#hero" onmouseover="this.style.color='#f9fafb'" onmouseout="this.style.color='#9ca3af'"
+                        class="footer-link-gray">Back to Top
+                        &uarr;</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
