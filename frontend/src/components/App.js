@@ -65,7 +65,7 @@ function App() {
               </h1>
             </div>
             <br></br>
-            <div class="mb-3 pt-0">
+            <div className="mb-3 pt-0">
               <input
                 id="input-participantID"
                 type="text"

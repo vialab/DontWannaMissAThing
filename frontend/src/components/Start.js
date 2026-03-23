@@ -15,7 +15,7 @@ function showNext() {
 }
 
 function Start() {
-  const pid = useSelector((state) => state.participantID);
+  const pid = useSelector((state) => state.participantID || []);
   let cursor = "";
   // Update task order based on participantID - ex. 1234
   //let preStudy = ["/start", "/consent-form", "/prestudy"];
@@ -51,6 +51,13 @@ function Start() {
   ];
 
   let tasks = [task1, task2, task3, task4]
+  if (pid.length === 0) {
+    console.log("No participant ID found, defaulting to 1234");
+    pid[0] = 1;
+    pid[1] = 2;
+    pid[2] = 3;
+    pid[3] = 4;
+  }
   let taskOrder = preStudy.concat(tasks[pid[0]-1], tasks[pid[1]-1], tasks[pid[2]-1], tasks[pid[3]-1], postStudy)
   Window.links = taskOrder;
 

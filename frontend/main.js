@@ -5,17 +5,9 @@ const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const url = require("url");
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-// Keep a reference for dev mode
 let dev = false;
-
-// Broken:
-// if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
-//   dev = true
-// }
 
 if (
   process.env.NODE_ENV !== undefined &&
@@ -23,13 +15,6 @@ if (
 ) {
   dev = true;
 }
-
-// Temporary fix broken high-dpi scale factor on Windows (125% scaling)
-// info: https://github.com/electron/electron/issues/9691
-// if (process.platform === "win32") {
-//   app.commandLine.appendSwitch("high-dpi-support", "true");
-//   app.commandLine.appendSwitch("force-device-scale-factor", "1");
-// }
 
 function createWindow() {
   // Create the browser window.
@@ -45,7 +30,6 @@ function createWindow() {
     },
   });
 
-  // and load the index.html of the app.
   let indexPath;
 
   if (dev && process.argv.indexOf("--noDevServer") === -1) {
@@ -157,38 +141,6 @@ function parseMessage(message) {
 
 server.bind(PORT, HOST);
 
-// Connect to db
-/*
-const { MongoClient } = require("mongodb");
-
-async function connectDB() {
-  const uri = "mongodb://localhost:27017/";
-  const client = new MongoClient(uri);
-  var taskOrder = "default";
-  try {
-    await client.connect();
-    console.log("Connected to MongoDB");
-
-    // Find empty document to append participant data to
-    const result = await client
-      .db("test")
-      .collection("test")
-      .findOne({ participantID: "name-id" });
-    console.log("Task order: ", result.taskOrder);
-    taskOrder = result.taskOrder;
-    // Set task order
-
-    // Set participant ID
-  } catch (error) {
-    console.log(error);
-  } finally {
-    await client.close();
-  }
-  return taskOrder;
-}
-
-var taskOrder = connectDB().catch(console.error);
-*/
 // Mobile quiz
 const http = require("http").createServer();
 
@@ -251,37 +203,6 @@ io.on("connection", (socket) => {
   socket.on("UPDATE_DB", (message) => {
     // message: {pid: 1234, qSet: VIDEO1, response: ... }
     console.log("MobileQuiz: Received answer - ", message['response'], "Time elapsed - ", message['timeElapsed']);
-    /*
-    async function connectDB() {
-      const uri = "mongodb://localhost:27017/";
-      const client = new MongoClient(uri);
-      var taskOrder = "default";
-      try {
-        await client.connect();
-        console.log("Connected to MongoDB");
-        // Query
-        const query = {
-          pid: message["pid"],
-          distractorResponses: [],
-        };
-        const updateDocument = {
-          $set: { ["distractorResponses." + message["qSet"]]: message["response"] },
-        };
-        const options = { upsert: true };
-        const result = await client
-          .db("test")
-          .collection("test")
-          .updateOne(query, updateDocument, options);
-
-      } catch (error) {
-        console.log("Error:", error);
-      } finally {
-        await client.close();
-      }
-      return taskOrder;
-    }
-    connectDB().catch(console.error);
-    */
   });
 });
 

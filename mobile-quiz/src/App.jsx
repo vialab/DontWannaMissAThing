@@ -6,35 +6,35 @@ import Stopwatch from "@tsdotnet/stopwatch";
 const waitingThreshold = 20; // Waiting for answer threshold in seconds
 
 // Print local IP
-const { networkInterfaces } = require("os");
-const nets = networkInterfaces();
-const results = Object.create(null); // Or just '{}', an empty object
+// const { networkInterfaces } = require("os");
+// const nets = networkInterfaces();
+// const results = Object.create(null); // Or just '{}', an empty object
 
-for (const name of Object.keys(nets)) {
-  for (const net of nets[name]) {
-    // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
-    if (net.family === "IPv4" && !net.internal) {
-      if (!results[name]) {
-        results[name] = [];
-      }
-      results[name].push(net.address);
-    }
-  }
-}
+// for (const name of Object.keys(nets)) {
+//   for (const net of nets[name]) {
+//     // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+//     if (net.family === "IPv4" && !net.internal) {
+//       if (!results[name]) {
+//         results[name] = [];
+//       }
+//       results[name].push(net.address);
+//     }
+//   }
+// }
 
-let addr;
+// let addr;
 
-if (results["Wi-Fi"]) {
-  addr = results["Wi-Fi"][0];
-} else if (results["Ethernet"]) {
-  addr = results["Ethernet"][0];
-}
+// if (results["Wi-Fi"]) {
+//   addr = results["Wi-Fi"][0];
+// } else if (results["Ethernet"]) {
+//   addr = results["Ethernet"][0];
+// }
 
-console.log("IP Addr:", addr);
+// console.log("IP Addr:", addr);
 
-const socket = io("ws://" + "10.160.3.7" + ":8001");
-const ip = require("ip");
-console.log(ip.address());
+const socket = io("ws://" + window.location.hostname + ":8001");
+// const ip = require("ip");
+// console.log(ip.address());
 
 // Timer
 let timer = new Stopwatch();

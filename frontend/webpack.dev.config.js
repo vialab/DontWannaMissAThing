@@ -67,7 +67,8 @@ module.exports = {
       patterns: [
         { from: path.resolve(__dirname, 'src/assets/video'), to: 'assets/video' }
       ]
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin(),
   ],
   devtool: 'cheap-source-map',
   devServer: {
