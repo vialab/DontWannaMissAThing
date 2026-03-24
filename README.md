@@ -1,4 +1,6 @@
-# Don't Wanna Miss a Thing
+# Don't Wanna Miss a Thing: Gaze-Aware Implicit Interventions for Distraction Recovery in Foreign-Language Videos
+
+[Project Page](https://vialab.github.io/DontWannaMissAThing/)
 
 ## Project Summary
 <p align="justify">
