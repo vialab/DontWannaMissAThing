@@ -6,7 +6,9 @@ const setupPopover = (btnId, popoverId) => {
 
     // Toggle popover when button is clicked
     btn.addEventListener("click", (e) => {
+        console.log(`Toggling popover:`, popover.classList);
         popover.classList.toggle("active");
+        console.log(`Toggling popover:`, popover.classList);
         e.stopPropagation(); // Stop click from reaching the document (which would close it)
     });
 
@@ -16,14 +18,15 @@ const setupPopover = (btnId, popoverId) => {
     });
 };
 
-setupPopover("share-trigger-btn", "share-popover");
-setupPopover("share-trigger-btn-footer", "share-popover-footer");
 
 // A much simpler document listener: if a click makes it this far, close all popovers
 document.addEventListener("click", () => {
-    document.getElementById("share-popover")?.classList.remove("active");
-    document.getElementById("share-popover-footer")?.classList.remove("active");
+    console.log("Document clicked, closing popovers");
+    // document.getElementById("share-popover")?.classList.remove("active");
+    // document.getElementById("share-popover-footer")?.classList.remove("active");
 });
+setupPopover("share-trigger-btn", "share-popover");
+setupPopover("share-trigger-btn-footer", "share-popover-footer");
 
 function toggleDubMute() {
     const video = document.getElementById("dub-video");
@@ -42,6 +45,17 @@ function toggleDubMute() {
         icon.className = "fas fa-volume-xmark";
         text.innerText = "Unmute";
     }
+}
+
+// Video Presentation Toggle
+const vidDetails = document.querySelector(".video-presentation-details");
+const vidSummary = document.querySelector(".video-presentation-summary");
+if (vidDetails && vidSummary) {
+    vidDetails.addEventListener("click", (e) => {
+        if (e.target === vidDetails || e.target === vidSummary) {
+            vidDetails.classList.toggle("open");
+        }
+    });
 }
 
 // GSAP Scroll Animations
