@@ -66,8 +66,10 @@ const gazeOrb = document.getElementById("gaze-cursor");
 const subtitleContainer = document.getElementById("simulated-subtitle");
 const heroSection = document.getElementById("hero");
 
-function readSubtitle() {
-    // Generate a random line of "words"
+let isHeroAnimPaused = false;
+let masterHeroTimeline;
+
+function playSubtitleCycle() {
     subtitleContainer.innerHTML = "";
     const wordCount = gsap.utils.random(4, 9, 1);
     for (let i = 0; i < wordCount; i++) {
@@ -77,78 +79,72 @@ function readSubtitle() {
         subtitleContainer.appendChild(w);
     }
 
-    // Bring the subtitle into view
-    gsap.fromTo(subtitleContainer,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+    // Ensure container is in its final position to measure accurately
+    gsap.set(subtitleContainer, { opacity: 0, y: 0, x: 0 });
+
+    const words = subtitleContainer.children;
+    const heroRect = heroSection.getBoundingClientRect();
+
+    // Pre-calculate target coordinates horizontally
+    const coords = [];
+    for (let i = 0; i < words.length; i++) {
+        const rect = words[i].getBoundingClientRect();
+        coords.push({
+            x: rect.left - heroRect.left + rect.width / 2,
+            y: rect.top - heroRect.top + rect.height / 2
+        });
+    }
+
+    // Master timeline to chain the entire loop cycle seamlessly
+    masterHeroTimeline = gsap.timeline({
+        onComplete: playSubtitleCycle
+    });
+
+    // 1. Bring the subtitle into view
+    masterHeroTimeline.fromTo(subtitleContainer,
+        { opacity: 0, y: 20, x: 0 },
+        { opacity: 1, y: 0, x: 0, duration: 0.6, ease: "power2.out" }
     );
 
-    // Wait a moment for it to appear, then read word by word
-    setTimeout(() => {
-        const words = subtitleContainer.children;
-        const heroRect = heroSection.getBoundingClientRect();
+    // 2. Wait a moment, then move orb to start of subtitle
+    masterHeroTimeline.to(gazeOrb, {
+        x: coords[0].x,
+        y: coords[0].y,
+        duration: 0.4,
+        ease: "power2.out"
+    }, "+=0.2");
 
-        const timeline = gsap.timeline({
-            onComplete: () => {
-                // After reading, fade out the subtitle
-                gsap.to(subtitleContainer, {
-                    opacity: 0,
-                    y: -10,
-                    duration: 0.5,
-                    delay: 0.5,
-                    onComplete: () => {
-                        // Loop
-                        readSubtitle();
-                    }
-                });
+    // 3. Read across words
+    let currentX = coords[0].x;
+    for (let i = 1; i < coords.length; i++) {
+        const targetX = coords[i].x;
+        const targetY = coords[i].y;
+        const isSkip = Math.random() < 0.15;
+        const dist = Math.abs(targetX - currentX);
+        const duration = isSkip ? 0.3 : (dist / 500); // Constant reading speed
 
-                // Wander off temporarily
-                gsap.to(gazeOrb, {
-                    x: heroRect.width * gsap.utils.random(0.2, 0.8),
-                    y: heroRect.height * gsap.utils.random(0.2, 0.6),
-                    duration: 0.5,
-                    ease: "power2.inOut"
-                });
-            }
+        masterHeroTimeline.to(gazeOrb, {
+            x: targetX,
+            y: targetY,
+            duration: duration,
+            ease: "none"
         });
+        currentX = targetX;
+    }
 
-        // Get first and last word coordinates to know the total width
-        const firstRect = words[0].getBoundingClientRect();
-        const startX = firstRect.left - heroRect.left + firstRect.width / 2;
-        const startY = firstRect.top - heroRect.top + firstRect.height / 2;
+    // 4. Wander off temporarily and fade out subtitle
+    masterHeroTimeline.to(gazeOrb, {
+        x: heroRect.width * gsap.utils.random(0.3, 0.7),
+        y: heroRect.height * gsap.utils.random(0.3, 0.7),
+        duration: 0.6,
+        ease: "power2.inOut"
+    }, "+=0");
 
-        // Move instantly to start of subtitle
-        timeline.to(gazeOrb, {
-            x: startX,
-            y: startY,
-            duration: 0.4,
-            ease: "power2.out"
-        });
-
-        // Read across at constant speed, with small chance to visually jump/skip
-        let currentX = startX;
-        for (let i = 1; i < words.length; i++) {
-            // 15% chance to "skip" word by animating through it faster
-            const isSkip = Math.random() < 0.15;
-
-            const rect = words[i].getBoundingClientRect();
-            const targetX = rect.left - heroRect.left + rect.width / 2;
-            const targetY = rect.top - heroRect.top + rect.height / 2;
-
-            // Base duration heavily depends on physical distance to ensure constant speed
-            const dist = Math.abs(targetX - currentX);
-            const duration = isSkip ? 0.3 : (dist / 400); // 300px per second reading speed. Skips move blazingly fast
-
-            timeline.to(gazeOrb, {
-                x: targetX,
-                y: targetY,
-                duration: duration,
-                ease: "none"
-            });
-            currentX = targetX;
-        }
-
-    }, 800);
+    masterHeroTimeline.to(subtitleContainer, {
+        opacity: 0,
+        y: -10,
+        duration: 0.5
+    }, "+=0.2");
 }
 
 // Initial setup for orb position
@@ -159,7 +155,25 @@ gsap.set(gazeOrb, {
 });
 
 // Start subtitle reading animation loop
-setTimeout(readSubtitle, 1000);
+setTimeout(() => {
+    playSubtitleCycle();
+}, 1000);
+
+// Pause Button Logic
+const pauseHeroBtn = document.getElementById("pause-hero-btn");
+if (pauseHeroBtn) {
+    pauseHeroBtn.addEventListener("click", () => {
+        isHeroAnimPaused = !isHeroAnimPaused;
+        
+        if (isHeroAnimPaused) {
+            pauseHeroBtn.innerHTML = '<i class="fas fa-play"></i>';
+            if (masterHeroTimeline) masterHeroTimeline.pause();
+        } else {
+            pauseHeroBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            if (masterHeroTimeline) masterHeroTimeline.play();
+        }
+    });
+}
 
 // Hero Init Animations
 const heroTl = gsap.timeline({ defaults: { ease: "power3.out", duration: 1.2 } });
