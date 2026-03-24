@@ -36,7 +36,7 @@ npm start
 
 >**NOTE:** Make sure to run both `/frontend` and `/mobile-quiz`
 
-> `pnm dev` will run without the eyetracker
+> `pnpm dev` will run without the eyetracker
 
 ### Troubleshooting
 
