@@ -35,10 +35,5 @@ ehthumbs.db
 #####################
 *.lnk
 
-# Video and subtitles #
-#######################
-*.mp4
-*.srt
-
 data/
 Don't Wanna Miss A Thing/
