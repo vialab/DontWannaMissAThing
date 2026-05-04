@@ -51,6 +51,14 @@ if (vidDetails && vidSummary) {
     vidDetails.addEventListener("click", (e) => {
         if (e.target === vidDetails || e.target === vidSummary) {
             vidDetails.classList.toggle("open");
+
+            // Pause/play youtube video when toggling details
+            const iframe = document.querySelector(".video-wrapper iframe");
+            if (iframe) {
+                const src = iframe.src;
+                iframe.src = "";
+                iframe.src = src;
+            }
         }
     });
 }
