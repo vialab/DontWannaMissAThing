@@ -1,6 +1,10 @@
 # Don't Wanna Miss a Thing: Gaze-Aware Implicit Interventions for Distraction Recovery in Foreign-Language Videos
 
-[Project Page](https://vialab.github.io/DontWannaMissAThing/)
+Mohammed Ahmed, Benedict Leung, Mariana Shimabukuro, Christopher Collins  
+*Proc. ACM Hum.-Comput. Interact. 10, 3, Article ETRA015 - (ETRA '26)*
+
+[![Project Page](https://img.shields.io/badge/Project%20Page-Visit-7c3aed?style=for-the-badge)](https://vialab.github.io/DontWannaMissAThing/)
+[![DOI](https://img.shields.io/badge/DOI-10.1145%2F3806029-blue?style=for-the-badge)](https://doi.org/10.1145/3806029)
 
 ## Project Summary
 <p align="justify">
